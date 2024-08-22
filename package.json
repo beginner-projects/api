@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@sparticuz/chromium": "^127.0.0",  // Alternative to chrome-aws-lambda
+    "chrome-aws-lambda": "^10.1.0"
     "fs": "^0.0.1-security",
     "next": "14.2.6",
     "playwright": "^1.46.1",
@@ -27,7 +27,5 @@
     "tailwindcss": "^3.4.1",
     "typescript": "^5"
   },
-  "optionalDependencies": {
-    "chrome-aws-lambda": "^10.1.0"
-  }
+  
 }
