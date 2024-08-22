@@ -1,25 +1,19 @@
 // src/app/api/fetchBFGPrice/route.ts
-import puppeteer from 'puppeteer-core';
-import chromium from '@sparticuz/chromium';
+import { chromium } from 'playwright';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
-    const browser = await puppeteer.launch({
-      args: chromium.args,
-      executablePath: await chromium.executablePath(),
-      headless: chromium.headless,
-    });
-
+    const browser = await chromium.launch({ headless: true });
     const page = await browser.newPage();
     const siteUrl = "https://coinmarketcap.com/currencies/betfury/";
 
-    await page.goto(siteUrl, { waitUntil: "networkidle2" });
+    await page.goto(siteUrl, { waitUntil: "networkidle" });
 
     const priceSelector = "#section-coin-overview > div.sc-65e7f566-0.DDohe.flexStart.alignBaseline > span";
     await page.waitForSelector(priceSelector);
 
-    const priceText = await page.$eval(priceSelector, (el) => el.textContent);
+    const priceText = await page.textContent(priceSelector);
 
     if (!priceText) {
       throw new Error('Price text not found');
