@@ -1,12 +1,14 @@
 // src/app/api/fetchBFGPrice/route.ts
 import puppeteer from 'puppeteer-core';
+import chromium from '@sparticuz/chromium';
 import { NextResponse } from 'next/server';
 
 export async function GET() {
   try {
     const browser = await puppeteer.launch({
-      headless: true,
-      executablePath: "C:\\Program Files\\Google\\Chrome\\Application\\chrome.exe",
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
     });
 
     const page = await browser.newPage();
